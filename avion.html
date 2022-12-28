@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Grados</title>
+</head>
+<body>
+    <script>
+        // una avioneta despega a 170km/h, con un angulo de 30 grados
+        
+        var velocidad = prompt("Introduce velocidad: ");
+        var angulo = prompt("Introduce angulo: ");
+        var pi = Math.PI;
+        var radianes = angulo * pi/180;
+        var coseno = Math.cos(radianes * Math.PI / 180);
+        var seno = Math.sin(radianes * Math.PI / 180);
+        var velocidadX = velocidad * coseno;
+        var velocidadY = velocidad * seno;
+        
+        document.write("Velocidad X = " + velocidadX + "<br>");
+        document.write("Velocidad Y = " + velocidadY + "<br>");
+    
+    </script>
+</body>
+</html>

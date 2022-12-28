@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>indexedDB</title>
+<style>
+input {
+	width:170px;
+	font-size:18px;
+}
+
+</style>
+<!-- Código extraido de la explicación de las diapositivas del tema -->
+</head>
+<body>
+	<input type="button" value="Abrir base" id="abrirBase" onclick="crearAbrirBase()">
+	<input type="button" value="Borrar base" id="borrarBase" onclick="borrarBase()">
+	<input type="button" value="Agregar Empleado" id="agregarEmpleado" onclick="agregarEmpleado()">
+<br><br>
+	<input type="button" value="Borrar Empleado" id="borrarEmpleado" onclick="borrarEmpleado()">
+	<input type="button" value="Listado" id="listado" onclick="listado()">
+	<input type="button" value="Buscar empleado" id="buscarEmpleado" onclick="buscarEmpleado()">	
+<br><br>
+	<input type="button" value="Agregar array" id="agregarArray" onclick="agregarArray()">
+	
+<script>
+var db;
+const contactos = [
+ {nombre: "Pepe", edad: 35, email:"pepe@gmail.com"},
+ {nombre: "Maria", edad: 24, email:"maria@gmail.com"},
+ {nombre: "Luisa", edad: 53, email:"luisa@gmail.com"}
+];
+function crearAbrirBase(){
+	var peticion=window.indexedDB.open("empresa");
+	peticion.onsuccess=function(e){
+		console.log("entrando en onsuccess")
+		db=e.target.result;		
+	}
+	peticion.onupgradeneeded=function(e){
+		console.log("entrando en upgrade")
+		db=e.target.result;	
+		db.createObjectStore("empleados",{keyPath : 'id', autoIncrement : true});
+	}
+	peticion.onerror=(error)=>{
+		console.log('Error',error);
+	}
+
+	if (!window.indexedDB) {
+	 window.alert("Su navegador no soporta una versión estable de indexedDB. Tal y como las características no serán validas");
+	}
+	//version de la base
+	//peticion = bbdd.setVersion("VERSION_1");
+}
+function borrarBase(){
+	//borrar base de datos
+	console.log('borrar base');
+	peticion = window.indexedDB.deleteDatabase("empresa");
+}
+function agregarEmpleado() {
+	//empleado=
+	//var id=prompt("id: ");
+	var nombre=prompt("nombre: ");
+	var edad=Number(prompt("edad: "));
+	var email=prompt("email: ")
+	empleado={nombre: nombre,edad:edad, email:email}
+	var request = db.transaction(["empleados"],"readwrite").objectStore("empleados").add(empleado);
+	request.onsuccess = function(event) {
+	console.log("Empleado añadido ") };
+	request.onerror = function(event) {
+	console.log("No se ha podido añadir a la BD");
+	};
+}
+function agregarArray() {
+			console.log("agregando array");
+			var contenedorEmpleados=db.transaction("empleados", "readwrite").objectStore("empleados");
+			for (var i in contactos) {
+				contenedorEmpleados.add(contactos[i]);
+			}
+		}
+
+function borrarEmpleado() {
+	var id=parseInt(prompt("Clave del empleado a borrar"));
+	var request = db.transaction(["empleados"], "readwrite").objectStore("empleados").delete(id);
+	request.onsuccess = function(event) {
+	console.log(`Empleado con id ${id} ha sido borrado`);
+	};
+}
+function buscarEmpleado() {
+	var id=parseInt(prompt("Clave del empleado a borrar"));
+	var transaction = db.transaction(["empleados"]);
+	var objectStore = transaction.objectStore("empleados");
+	var request = objectStore.get(id);
+	request.onerror = function(event) {
+		console.log("error al abrir la BD");
+	};
+	request.onsuccess = function() {
+		if (request.result) {
+			console.log("buscando empleado", id);
+			console.log("nombre",request.result.nombre);
+			console.log("edad",request.result.edad);
+			console.log("email",request.result.email);	
+		} else {
+			console.log("Empleado no encontrado")
+		}
+	}
+};
+function listado() {
+	var objectStore = db.transaction("empleados").objectStore("empleados");
+	objectStore.openCursor().onsuccess = function(event) {
+	var cursor = event.target.result;
+	if (cursor) {
+		console.log(`id ${cursor.key} es
+		${cursor.value.nombre} , Edad: ${cursor.value.edad},
+		Email: ${cursor.value.email}`);
+		cursor.continue();
+	} else {
+		console.log("No hay más empleados") }
+	};
+};
+</script>
+</body>
+</html>

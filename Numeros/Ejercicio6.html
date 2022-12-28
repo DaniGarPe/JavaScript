@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 6</title>
+</head>
+<body>
+    <p><b>6 </b> - Solicite tres números y muestre el menor de ellos. Realizar el mismo ejercicio para n números y mostrar el mayor</p>
+    <script>
+    
+        // Solicite un número y muestre una cuenta atrás
+        
+        var num1 = prompt("Introduce  primer número");
+        var num2 = prompt("Introduce segundo número");
+        var num3 = prompt("Introduce tercer número");
+        
+        if(num1 < num2){
+           if(num1 < num3){
+               document.write(num1 + " es el menor");
+           } else {
+               document.write(num3 + " es el menor");
+           }
+        } else if(num2 < num3){
+            document.write(num2 + " es el menor");
+        } else {
+            document.write(num3 + " es el menor");
+        }
+    
+    </script>
+</body>
+</html>

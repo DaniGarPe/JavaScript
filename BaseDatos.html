@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 4</title>
+</head>
+<body>
+    <form action="">
+        <input type="button" id="boton1" value="Generar Array" onclick="generarArray()">
+        <input type="button" id="boton2" value="Escribir Array" onclick="escribirArray()">
+        <input type="button" id="boton3" value="Abrir Base" onclick="abrirBD()">
+        <input type="button" id="boton4" value="Agregar Array" onclick="agregarArray()">
+        <input type="button" id="boton5" value="Listar Base" onclick="listarBD()">
+        <input type="button" id="boton6" value="Elegir codigos" onclick="elegirCod()">
+    </form>
+    <div id="miDiv"></div>
+    
+    <script>
+        
+        // creo el array de dos dimensiones, para guardar el codigo y la letra que corresponde con el codigo ascii
+        
+        var db;
+        
+        var matriz = new Array();
+        //matriz[0] = []; // aqui no funiona, porque solo la primera fila seria un 
+        
+        // rellenar el array con cada codigo y su letra de la A a la z
+        
+        function generarArray(){
+            // el array le hago de 0 a 26 y le sumo 65, para solo hacer un bucle y que me de el codigo
+                for(var i=0; i<26; i++ ){
+                    matriz[i] = []; // tengo que ponerlo aqui para que cada fila sea otro array
+                    matriz[i][0] = i+65;
+                    matriz[i][1] = String.fromCharCode(i+65);
+                    //console.log(matriz[i][1]);
+                }
+            
+            alert("Se ha credo el Array");
+        }
+        
+        // imprimir el array
+        
+        function escribirArray(){
+            var resultado = "";
+            document.getElementById("miDiv").innerHTML = "";
+            for(var i=0; i<26; i++ ){
+                var codigo = matriz[i][0];
+                var letra = matriz[i][1];
+                
+                resultado = codigo + " - " + letra;
+                document.getElementById("miDiv").innerHTML += resultado + "<br>";
+            }
+        }
+        
+        // abrir la base de datos
+        
+        function abrirBD(){
+            var peticion=indexedDB.open("codigos");
+            peticion.onsuccess=function(e){
+                console.log("entrando en onsuccess");
+                db=e.target.result;
+                alert("Se ha abierto la Base de datos codigos.");
+            }
+            peticion.onupgradeneeded=function(e){
+                console.log("entrando en upgrade");
+                db=e.target.result;	
+                db.createObjectStore("contenedor ascii",{keyPath:"codigo"}); // el keypath debe ser codigo, para que no se puedan repetir
+                //alert("Se ha abierto la base de datos");
+            }
+            peticion.onerror=(error)=>{
+                console.log('Error',error);
+            }
+            
+            if (!window.indexedDB) {
+                window.alert("Su navegador no soporta una versión estable de indexedDB. Tal y como las características no serán validas");
+            }
+            
+        }
+        
+        function agregarArray(){
+            var peticion=indexedDB.open("codigos");
+            peticion.onsuccess=function(e){
+                console.log("entrando en onsuccess el array ya se ha agregado");
+                db=e.target.result;		
+            }
+            peticion.onupgradeneeded=function(e){
+                console.log("entrando en upgrade para agregar array");
+                db=e.target.result;	
+                var contenedor=db.createObjectStore("contenedor ascii",{keyPath:"codigo"});
+                contenedor.createIndex("codigo", "caracter", { unique: true });
+                //contenedor.createIndex("correo", "email", { unique: true });
+                // oncomplete para comprobar que la creación del almacén haya terminado
+                contenedor.transaction.oncomplete = function(event) {
+                    console.log("agregando array");
+                    var contenedorAscii=db.transaction("codigos", "readwrite").objectStore("matriz");
+                    for (var i in matriz) {
+                        contenedorAscii.add(matriz[i]);
+                    }
+                }
+            }
+            peticion.onerror=(error)=>{
+                console.log('Error',error);
+            }
+        //	peticion.onsuccess = respuesta_exito;
+        //	peticion.onerror = respuesta_error;
+
+            if (!window.indexedDB) {
+             window.alert("Su navegador no soporta una versión estable de indexedDB. Tal y como las características no serán validas");
+            }
+            //version de la base
+            //peticion = bbdd.setVersion("VERSION_1");
+        }
+        
+        function listarBD() {
+            var objectStore = db.transaction("codigos").objectStore("codigos");
+            objectStore.openCursor().onsuccess = function(event) {
+                var cursor = event.target.result;
+                if (cursor) {
+                    console.log(`codigo ${cursor.codigo} -
+                    ${cursor.value.caracter}`);
+                    cursor.continue();
+                } else {
+                        console.log("No hay más codigos"); 
+                }
+            }
+        }
+    
+    
+    
+    </script>
+</body>
+</html>

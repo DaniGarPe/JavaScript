@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Funciones 16</title>
+</head>
+<body>
+    <script>
+        
+        // Escribir la función sumarDigitos que sume los dígitos de un número
+     
+        var num = prompt("Introduce numero: ");
+        
+        function sumarDigitos(num){
+            
+            var suma=0;
+            
+            for(var i = 0; i < num.length; i++){
+                suma += parseInt(num[i]);
+            }
+
+            return suma;
+        }
+        
+        var resu = sumarDigitos(num);
+        
+        document.write("La suma de los digitos de " + num + " es: " + resu);
+        
+    </script>
+</body>
+</html>

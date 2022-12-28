@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Kaprekar</title>
+</head>
+<body>
+    <h1>Kaprekar</h1>
+    <script>
+        
+        /*
+        
+        Realizar un programa en JavaScript que compruebe la 
+        constante de Kaprekar.
+        Introduciendo un número de cuatro cifras se debe 
+        comprobar cuántas iteraciones son necesarias para llegar 
+        al número 6174
+
+        */
+        
+        var num = parseInt(prompt("Introduce un numero de cuatro cifras"));
+
+        if(isNaN(num) || num > 9999 || num < 1000){
+            alert("Numero no valido.");
+        }
+        
+        var contador = 0;
+
+        do{
+            
+            var nunString = num.toString();
+
+            var matriz = nunString.split("");
+
+            var mayor = matriz.sort(function(a, b){return b-a});
+
+            var resuMayor = mayor.join("");
+
+            var ordenMayor = parseInt(resuMayor);
+
+            var menor = mayor.reverse();
+
+            var resuMenor = menor.join("");
+
+            var ordenMenor = parseInt(resuMenor);
+
+            var resultado = ordenMayor - ordenMenor;
+            
+            if(resultado != 6174){
+                contador++;
+            }
+            
+            var num = resultado;
+            
+            document.write("<br>");
+            document.write("Ordenado de menor a mayor: "+ ordenMenor);
+            document.write("<br>");
+            document.write("Ordenado de mayor a menor: " + ordenMayor);
+            document.write("<br><br>");
+            document.write("Resultado: " + ordenMayor + " - " + ordenMenor + " = " + resultado);
+            document.write("<br><br>");
+            document.write("Total de iteraciones: " + contador);
+            document.write("<hr>");
+            
+        }while(resultado != 6174 || contador == 7);
+        
+    </script>
+</body>
+</html>

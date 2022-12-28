@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cuenta atras</title>
+    <style>
+        #miDiv{
+            width: 50px;
+            height: 50px;
+            background-color: grey;
+            color: white;
+            margin-bottom: px;
+            font-size: 50px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        button{
+            width: 90px;
+            background: black;
+            color: white;
+            border: black;
+            padding: 5px;
+        }
+        
+        button:hover{
+            background-color: #3C3C3C;
+            color: darkgrey;
+            cursor: pointer;
+        }
+    
+    </style>
+</head>
+<body>
+    <div id="miDiv"></div>
+    <button onclick="atras()">Inicio</button>
+    <script>
+        
+        /*
+            Crear cuenta atras que decremente desde un numero hasta cero cada segundo
+            al pulsar el boton de inicio
+        */
+        
+        function atras() {
+            
+            var contador = parseInt(prompt("Inicio del contador: "));
+            
+            document.getElementById("miDiv").innerHTML = contador;
+            var tiempo = setInterval(calculo, 1000);
+            
+            function calculo() {
+                if (contador == 0) {
+                    clearInterval(tiempo);
+                } else {
+                    contador--; 
+                    document.getElementById("miDiv").innerHTML = contador;
+                }
+            }
+            
+        }
+        
+    </script>
+    
+</body>
+</html>

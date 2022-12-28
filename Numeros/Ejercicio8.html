@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--Solicite cuatro números y los muestre en orden-->
+
+	<title>Ordenar los numeros introducidos</title>
+	<meta charset="utf-8">
+</head>
+<body>
+   
+   <script>
+
+   	/* 
+   	posibilidades 4 numeros:
+	
+	abcd = 1234
+	abdc = 1243
+	acbd = 1324
+	acdb = 1342
+	adbc = 1323
+	adcb = 1432
+	bacd = 2134
+	badc = 2143
+	bcad = 2314
+	bcda = 2341
+	bdac = 2413
+	bdca = 2431
+	cabd = 3124
+	cadb = 3142
+	cbad = 3214
+	cbda = 3241
+	cdba = 3421
+	cdab = 3412
+	dabc = 4123
+	dacb = 4132
+	dbac = 4213
+	dbca = 4231
+	dcab = 4312
+	dcba = 4321
+
+	posibilidades 3 numeros:
+
+	abc = 123
+	acb = 132
+	bac = 213
+	bca = 231
+	cab = 312
+	cba = 321
+
+
+
+   	*/
+
+   	
+   	var numero1;
+   	var numero2;
+   	var numero3;
+   	//var numero4;
+
+
+   	numero1=parseInt(prompt("Introduzca el Primer numero"));
+   	numero2=parseInt(prompt("Introduzca el Segundo numero"));
+   	numero3=parseInt(prompt("Introduzca el Tercer numero"));
+   	//numero4=parseInt(prompt("Introduzca el Cuarto numero"));
+
+
+   	if (numero1>= numero2 && numero1 >= numero3) {
+   		if(numero2>=numero3){
+   			document.write("El orden es: " + numero1 + ", " + numero2 + ", " + numero3);
+   		} else {
+   			document.write("El orden es: " + numero1 + ", " + numero3 + ", " + numero2);
+   		}
+   	} else if(numero2 >= numero1 && numero2 >= numero3){
+   		if (numero1 >= numero3) {
+   			document.write("El orden es: " + numero2 + ", " + numero1 + ", " + numero3);
+   		}else{
+   			document.write("El orden es: " + numero2 + ", " + numero3 + ", " + numero1);
+   		}
+   	} else if (numero3 >= numero1 && numero3 >= numero2) {
+   		if(numero1 >= numero2){
+   			document.write("El orden es: "+ numero3 + ", " + numero1 + ", " + numero2);
+   		} else {
+   			document.write("El orden es: "+ numero3 + ", " + numero2 + ", " + numero1);
+   		}
+   	}
+   	
+
+
+
+   </script>
+
+
+
+</body>
+</html>

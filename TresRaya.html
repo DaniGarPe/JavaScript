@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Juego: Tres en raya</title>
+    <meta charset="UTF-8" />
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
+        
+        *{
+            font-family: 'Press Start 2P', cursive;
+            color: white;
+            background-color: black;
+        }
+        
+        #player1 {
+            color: red;
+        }
+        
+        #player2 {
+            color: blue;
+        }
+        
+        #titulo{
+            font-family: 'Press Start 2P', cursive;
+            font-size: 20px;
+            padding-bottom: 20px;
+            width: 300px;
+            text-decoration: underline;
+        }
+        
+        #tabla {
+            background-color: grey;
+            padding: 2px;
+        }
+        
+        #tabla td, tr {
+            border: 2px solid black;
+            margin:0;
+            background-color: white;
+            width: 100px;
+            height: 100px;
+        }
+        
+        #tabla:hover td:hover, tr:hover {
+            border: 2px solid grey;
+        }
+        
+        a{
+            text-decoration: none;
+            color: white;
+            border: 2px solid white;
+            padding: 5px;
+        }
+        
+        a:hover {
+            background-color: darkgray;
+            border: 2px solid grey;
+            color: black;
+        }
+    
+    </style>
+    
+    <script>
+        // Programa el juego de las tres en raya de forma que la máquina debe 
+        // intentar ganar o al menos defenderse para no perder.
+        
+        var mapa = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        var jugador = 1;
+        function dibujar(){
+            for(i=0; i<9; i++){
+                if(mapa[i] == 0){
+                    document.getElementById("c"+i).style="background-color: white";
+                }
+                if(mapa[i] == 1){
+                    document.getElementById("c"+i).style="background-color: red";
+                }
+                if(mapa[i] == 2){
+                    document.getElementById("c"+i).style="background-color: blue";
+                }
+            }
+        }
+        function pcelda(celda){
+            if (mapa[celda]==0) {
+                if (jugador==1){
+                    mapa[celda]=1;
+                    jugador=2;
+                } else {
+                    // modificar esta parte para que la CPU actue sola
+
+                    mapa[celda]=2;
+                    jugador=1; 
+                }
+            } else {
+                window.alert("No puedes pulsar sobre una celda coloreada");
+            }
+            dibujar();
+            var r = ganador();
+            switch(r){
+                case 0:
+                    break;
+                case 1:
+                    window.alert("¡Ganó el rojo!");
+                    break;
+                case 2:
+                    window.alert("¡Ganó el azul!");
+                    break;
+                case 3:
+                    window.alert("¡Empate!");
+                    break; 
+            }
+        }
+        function ganador(){
+            var numEspacios=0;
+            for(i=0; i<9; i++){
+                if(mapa[i] == 0){
+                    numEspacios++;
+                }
+            }
+            // Las líneas horizontales
+            if(mapa[0] == mapa[1] && mapa[1] == mapa[2] && mapa[0] !=0){
+                return mapa[0];
+            }
+                
+            if(mapa[3] == mapa[4] && mapa[4] == mapa[5] && mapa[3] !=0){
+                return mapa[3];
+            } 
+                
+            if(mapa[6] == mapa[7] && mapa[7] == mapa[8] && mapa[6] !=0) {
+                return mapa[6];
+            }
+                
+            //Las líneas verticales
+            if(mapa[0] == mapa[3] && mapa[3] == mapa[6] && mapa[0] !=0){
+                return mapa[0];
+            } 
+            if(mapa[1] == mapa[4] && mapa[4] == mapa[7] && mapa[1] !=0){
+                return mapa[1];
+            } 
+            if(mapa[2] == mapa[5] && mapa[5] == mapa[8] && mapa[2] !=0){
+                return mapa[2];
+            }
+            //Las diagonales
+            if(mapa[0] == mapa[4] && mapa[4] == mapa[8] && mapa[0] !=0){
+                return mapa[0];   
+            }
+            if(mapa[2] == mapa[4] && mapa[4] == mapa[6] && mapa[2] !=0){
+                return mapa[2];  
+            } 
+
+            if (numEspacios > 0){
+                return 0;
+            } else {
+                return 3;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div align="center">
+            <h1 id="titulo" align="center">TRES EN RAYA</h1>
+    </div>
+    <div id="marcador" align="center">
+        <div>
+            <!--<div id="player1">JUGADOR 1: <p id="jugador1"></p></div>-->
+            <!--<div id="player2">JUGADOR 2: <p id="jugador2"></p></div>-->
+        </div>
+    </div>
+    <table id ="tabla" align="center">
+        <tr>
+            <td id="c0" onclick="pintarCelda(0)"></td>
+            <td id="c1" onclick="pintarCelda(1)"></td>
+            <td id="c2" onclick="pintarCelda(2)"></td>
+        </tr>
+        <tr>
+            <td id="c3" onclick="pintarCelda(3)"></td>
+            <td id="c4" onclick="pintarCelda(4)"></td>
+            <td id="c5" onclick="pintarCelda(5)"></td>
+        </tr>
+        <tr>
+            <td id="c6" onclick="pintarCelda(6)"></td>
+            <td id="c7" onclick="pintarCelda(7)"></td>
+            <td id="c8" onclick="pintarCelda(8)"></td>
+        </tr>
+    </table>
+    <div align="center" border="0">  
+        <p width="300"  align="center"><br />
+            <a href="javascript:location.reload()">Reiniciar</a>
+        </p>   
+    </div>
+</body>
+</html>

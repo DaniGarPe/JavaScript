@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio A</title>
+</head>
+<body>
+    <script>
+        
+        // valores: 23.65, 13.01, 19.68, 2.14
+        
+        // declaro las variables
+        var i = 0;
+        var matriz = new Array();
+        var suma = 0;
+        var media = 0;
+        var mayor = "";
+        var menor = "";
+        var salir = false;
+        
+        // recoge los numeros en un array mientras no sea cero
+        do{
+            
+            var num = parseFloat(prompt("Introduce un numero: "));
+            
+            // me falto controlar la entrada
+            if(isNaN(num)){
+                alert("No es un numero ");
+                salir = true;
+            }
+            
+            // no hace falta el break, en su lugar uso un boolean
+            if(num == 0 || salir == true){
+                salir = true;
+            } else{
+                matriz[i] = num;
+            
+                i++;
+            }
+            
+        } while(num != 0 || salir != true);
+        
+        // muestro los numeros
+        document.write("Los numeros introducidos son: ");
+        
+        /* me lo podia ahorrar y meterlo en el siguiente for para optimizar los for
+        
+        for(j=0; j <= matriz.length-1; j++){
+            document.write(matriz[j] + ", ");
+            
+            suma = suma + matriz[j];
+            
+        }
+        */
+        
+        var menor = matriz[0];
+        
+        // calcula el mayor y el menor
+        for(k=0; k <= matriz.length-1; k++){
+            
+            // muestro los resultados
+            document.write(matriz[k] + ", ");
+            
+            suma = suma + matriz[k];
+            
+            //matriz.sort(function ordenar(k, l){ return a-b;});
+            for(l=0; l <= matriz.length-1; l++){
+                
+                // numero mayor
+                if(matriz[k] > matriz[l] && matriz[k] > mayor){
+                    mayor = matriz[k];
+                }
+                
+                // numero menor
+                if(matriz[k] < matriz[l] && matriz[k] < menor ){
+                    menor = matriz[k];
+                }
+            }
+        }
+        
+        // imprimo los resultados por pantalla
+        document.write("<br>" + "Suma = " + suma + "<br>");
+        
+        media = suma / matriz.length;
+        
+        document.write("Media = " + media + "<br>");
+        
+        document.write("Mayor = " + mayor + "<br>");
+        
+        document.write("Menor = " + menor + "<br>");
+        
+        
+    
+    </script>
+</body>
+</html>

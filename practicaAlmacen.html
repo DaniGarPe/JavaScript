@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Almacen</title>
+</head>
+<body>
+    <h1>Almacen de productos</h1>
+    <form action="">
+        <label for="id">Id. producto</label>
+        <input type="text" id="id" name="id" request>
+        <br><br>
+        <label for="nombre">Producto</label>
+        <input type="text" id="nombre" name="nombre" request>
+        <br><br>
+        <label for="color">Color</label>
+        <select name="color" id="color" request>
+            <option value="verde">Verde</option>
+            <option value="rojo">Rojo</option>
+            <option value="azul">Azul</option>
+            <option value="amarillo">Amarillo</option>
+            <option value="blanco">Blanco</option>
+            <option value="negro">Negro</option>
+        </select>
+        <br><br>
+        <label for="precio">Precio</label>
+        <input type="number" id="precio" name="precio" min="1" max="99" request>
+        <br><br>
+        <button onclick="crearAbrirBD()">Abrir Base de datos</button>
+        <button onclick="agregarProducto()">Agregar producto</button>
+        <button onclick="borrarProducto()">Buscar producto</button>
+        <button onclick="buscarProducto()">Borrar producto</button>
+        <button onclick="listado()">listar</button>
+        
+    </form>
+    <div id="miDiv"></div>
+   
+   
+    <script>
+        /*
+
+            Almacen que guarda los datos en una BD
+
+            crear un formulario que recoja los datos
+                id producto - text
+                nombre producto - text
+                color - select
+                precio - numero
+
+            botones
+                abrir/crear bd -  abre o crea la bd si no existe
+                agregar producto - guarda los datos en la bd
+                buscar producto - busca un producto por el id con un prompt
+                borrar producto - te pregunta si lo quieres borrar
+                listar - hacer un listar como quieras, mejor con un div
+
+
+        */
+
+        var db;
+        
+        const productos = [
+            {id: "01", producto: "Plastico", color: "rojo", precio: 5 },
+            {id: "02", producto: "Madera", color: "blanco", precio: 15},
+            {id: "03", producto: "Metacrilato", color: "negro", precio: 10}
+        ];
+        
+        function crearAbrirBD(){
+            var peticion=indexedDB.open("almacen");
+            peticion.onsuccess=function(e){
+                console.log("entrando en onsuccess")
+                db=e.target.result;
+            }
+            peticion.onupgradeneeded=function(e){
+                console.log("entrando en upgrade")
+                db=e.target.result;	
+                db.createObjectStore("productos",{keyPath:"id"});
+                alert("Base de datos abierta");
+                //document.getElementById("miDiv").innerHTML = "Base de datos abierta."
+            }
+            peticion.onerror=(error)=>{
+                console.log('Error',error);
+                alert('Error al crear o abrir la BD',error);
+            }
+        //	peticion.onsuccess = respuesta_exito;
+        //	peticion.onerror = respuesta_error;
+
+            if (!window.indexedDB) {
+                window.alert("Su navegador no soporta una versión estable de indexedDB. Tal y como las características no serán validas");
+            }
+            //version de la base
+            //peticion = bbdd.setVersion("VERSION_1");
+        }
+        
+        ///////////////////////////////////////////////
+        
+        function cambiarVersion(){
+            var peticion=indexedDB.open("almacen",4);
+            peticion.onsuccess=function(e){
+                console.log("entrando en onsuccess cambiando version")
+                db=e.target.result;		
+            }
+            peticion.onupgradeneeded=function(e){
+                console.log("entrando en upgrade cambiando version")
+                db=e.target.result;	
+                //Podemos crear un nuevo contenedor
+                db.createObjectStore("productos4",{keyPath:"id"});	
+            }
+            peticion.onerror=(error)=>{
+                console.log('Error',error);
+            }
+            //peticion = bbdd.setVersion("VERSION_1");
+        }
+        
+        //////////////////////////////////////////////
+        
+        //bd almacen - tabla productos
+        
+        function agregarProducto() {
+            //producto={id: "01", nombre: "madera", color: "azul", precio: 15"};
+            var id=document.getElementById("id").value;
+            var nombre=document.getElementById("nombre").value;
+            var color=document.getElementById("color").value;
+            var precio=document.getElementById("precio").value;
+            
+            producto={id:id, nombre:nombre, color:color, precio:precio};
+            var request = db.transaction(["productos"],"readwrite").objectStore("productos").add(producto);
+            
+            //db.transaction(["empleados"],"readwrite").objectStore("empleados").add(empleado);
+            
+            request.onsuccess = function(event) {
+                console.log("Producto añadido ");
+                alert("Producto añadido correctamente.");
+                //document.getElementById("miDiv").innerHTML = "Producto añadido correctamente.";
+            };
+            request.onerror = function(event) {
+                //document.getElementById("miDiv").innerHTML = "No se ha podido añadir a la BD";
+                console.log("No se ha podido añadir a la BD");
+                alert("No se ha podido añadir a la BD");
+            };
+        }
+        
+        function agregarEmpleado() {
+            //empleado={id: "99", nombre: "Luisa María", edad: 35, email:"luisa99@gmail.com"}
+            var id=document.getElementById("id").value;
+            var nombre=document.getElementById("nombre").value;
+            var color=document.getElementById("color").value;
+            var precio=document.getElementById("precio").value;
+            
+            producto={id:id, nombre:nombre, color:color, precio:precio};
+            var request = db.transaction(["productos"],"readwrite").objectStore("productos").add(producto);
+            request.onsuccess = function(event) {
+                console.log("producto añadido ");
+                alert("Producto añadido");
+            };
+            request.onerror = function(event) {
+                console.log("No se ha podido añadir a la BD");
+            };
+        }
+        
+        /////////////////////////////////////
+        
+        function agregarArray(){
+            var peticion=indexedDB.open("almacen");
+            peticion.onsuccess=function(e){
+                console.log("entrando en onsuccess el array ya se ha agregado")
+                db=e.target.result;		
+            }
+            peticion.onupgradeneeded=function(e){
+                console.log("entrando en upgrade para agregar array")
+                db=e.target.result;	
+                var contenedor=db.createObjectStore("productos",{keyPath:"id"});
+                contenedor.createIndex("nombre", "nombre", { unique: false });
+                //contenedor.createIndex("correo", "email", { unique: true });
+                // oncomplete para comprobar que la creación del almacén haya terminado
+                contenedor.transaction.oncomplete = function(event) {
+                    console.log("agregando array");
+                    var contenedorEmpleados=db.transaction("productos", "readwrite").objectStore("productos");
+                    for (var i in contactos) {
+                        contenedorEmpleados.add(contactos[i]);
+                    }
+                }
+            }
+            peticion.onerror=(error)=>{
+                console.log('Error',error);
+            }
+        //	peticion.onsuccess = respuesta_exito;
+        //	peticion.onerror = respuesta_error;
+
+            if (!window.indexedDB) {
+             window.alert("Su navegador no soporta una versión estable de indexedDB. Tal y como las características no serán validas");
+            }
+            //version de la base
+            //peticion = bbdd.setVersion("VERSION_1");
+        }
+
+        
+        /////////////////////////////////////
+        
+        function borrarProducto() {
+            var id=prompt("Id del producto a borrar");
+            var request = db.transaction(["productos"], "readwrite").objectStore("productos").delete(id);
+            request.onsuccess = function(event) {
+                document.getElementById("miDiv").innerHTML = "El empleado con id" + id + " ha sido borrado correctamente";
+            };
+        }
+        
+        /////////////////////////////////////
+
+        function buscarProducto() {
+            var id=prompt("Id del empleado a buscar");
+            var transaction = db.transaction(["productos"]);
+            var objectStore = transaction.objectStore("productos");
+            var request = objectStore.get(id);
+            request.onerror = function(event) {
+                document.getElementById("miDiv").innerHTML = "error al abrir la BD";
+            };
+            request.onsuccess = function() {
+                if (request.result) {
+                   var resultado = "";
+                    resultado += "buscando empleado " + id + "<br>";
+                    resultado += "nombre " + request.result.nombre + "<br>";
+                    resultado += "edad " + request.result.edad + "<br>";
+                    resultado += "email " + request.result.email + "<br>";	
+                    
+                    document.getElementById("miDiv").innerHTML = resultado;
+                } else {
+                    document.getElementById("miDiv").innerHTML = "Empleado no encontrado";
+                }
+            }
+        };
+
+        ////////////////////////////////////
+        
+        function listado() {
+            var objectStore = db.transaction("productos").objectStore("productos");
+            objectStore.openCursor().onsuccess = function(event) {
+                var cursor = event.target.result;
+                if (cursor) {
+                    var resultado = `id ${cursor.key} es
+                    ${cursor.value.nombre} , Color: ${cursor.value.color},
+                    Precio: ${cursor.value.precio}`;
+                    document.getElementById("miDiv").innerHTML = resultado;
+                    cursor.continue();
+                } else {
+                    document.getElementById("miDiv").innerHTML = "No hay más empleados" 
+                }
+            };
+        };
+        
+        
+
+
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2</title>
+</head>
+<body>
+    <script>
+        var num = parseInt(prompt("Introduce un numero entre 0 y 1000"));
+        var error = 0;
+        
+        if(isNaN(num) || num > 1000 || num < 0){
+            alert("Numero no valido.");
+            error++;
+            if(error >=3){
+                alert("Intentalo mas tarde.")
+            }
+        }
+        
+        var nst = num.toString();
+       
+        var matriz = nst.split("");
+        
+        var mayor = matriz.sort(function(a, b){return b-a});
+        
+        var resuMayor = mayor.join("");
+        
+        var ordenMayor = parseInt(resuMayor);
+        
+        //var menor = aux.reverse();
+        
+        var menor = mayor.reverse();
+
+        var resuMenor = menor.join("");
+
+        var ordenMenor = parseInt(resuMenor);
+        
+        var resultado = ordenMayor + ordenMenor;
+        
+        document.write("Numero introducido <br> " + ordenMayor + " + " + ordenMenor + " = " + resultado);
+        
+        var division = num / 7;
+        
+        var redondeo = division.toFixed(2);
+        
+        var resuRedondeo = parseFloat(redondeo);
+        
+        document.write("<br>Numero entre 7 redondeado a dos decimales: " + redondeo);
+        
+    </script>
+</body>
+</html>

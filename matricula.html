@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1</title>
+</head>
+<body>
+    <h1>Ejercicio expresiones regulares</h1>
+    <form>
+        <label>Introduce Matricula: </label>
+        <input type="text" name="matricula" id="matricula">
+        <input type="button" id="boton" value="Comprobar" onclick="comprobar()">
+    </form>
+    
+    <br>
+    <div id="mydiv"></div>
+    <script>
+        /*
+            ejercicio 2, comprobar matriculas
+        */
+        
+        // recojo el evento click al pulsar el boton
+        
+        document.getElementById("boton").addEventListener("click", comprobar);
+        
+        // recojo el evento del teclado al pulsar intro
+        
+        var input = document.getElementById("matricula");
+        
+        input.addEventListener("keydown", function(event) {
+            // el numero 13 es el que corresponde con la tecla "Enter"
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                // Llamo al boton que ejecuta la funcion
+                document.getElementById("boton").click();
+            }
+        });
+        
+        // funcion que comprueba la matricula
+        
+        function comprobar(){
+            var matricula = document.getElementById("matricula").value;
+            
+            var matricula = matricula.toUpperCase(); // fataba pasar a mayusculas y mostrarlo en el formulario en mayusculas
+            
+            document.getElementById("matricula").value = matricula;
+            
+            // no poner onclick en el imput
+            
+            // nueva matricula
+            
+            //faltaba un guion y poner dolar para que no puedas escribir mas caracteres
+            //var exprNueva = /^([0-9]{4})+([\ ]{1})+([B-DF-HJ-NPR-TVZ]{3})/i;
+            var exprNueva = /^([0-9]{4})+([\ ]{1})+([B-DF-HJ-NPR-TV-Z]{3})$/; 
+            var comprobarNueva = exprNueva.test(matricula);
+            
+            // matricula vieja
+            var exprVieja = /^([A-Z]{1,2})+([-]{1})+([0-9]{4})+([-]{1})+([A-Z]{1,2})$/;
+            var comprobarVieja = exprVieja.test(matricula);
+            
+            // compruebo ambos tipo de matricula
+            
+            if ( comprobarNueva === false ){
+                if(comprobarVieja === false){
+                    document.getElementById("mydiv").innerHTML = "Matricula no valida.";
+                } else{
+                    document.getElementById("mydiv").innerHTML = "Matricula valida.";
+                } 
+            } else {
+                document.getElementById("mydiv").innerHTML = "Matricula valida.";
+            }
+        }
+
+    </script>
+</body>
+</html>

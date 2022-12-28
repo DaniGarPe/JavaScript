@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		var fecha = new Date();
+		class Coche{
+			constructor(marca, modelo, anyoFab, precioCompra, precioVenta){
+				this._marca=marca;
+				this._modelo=modelo;
+				this._anyoFab=anyoFab;
+				this._precioCompra=precioCompra;
+				this._precioVenta=precioVenta;
+			}
+			get marca(){
+				return this._marca;
+			}
+			set marca(valor){
+				this._marca=valor;
+			}
+			get modelo(){
+				return this._modelo;
+			}
+			set modelo(valor){
+				this._modelo=valor;
+			}
+			get anyoFab(){
+				return this._anyoFab;
+			}
+			set anyoFab(valor){
+				this._anyoFab=valor;
+			}
+			
+			get precioCompra(){
+				return this._precioCompra;
+			}
+			set precioCompra(valor){
+				this._precioCompra=valor;
+			}
+			get precioVenta(){
+				return this._precioVenta;
+			}
+			set precioVenta(valor){
+				this._precioVenta=valor;
+			}
+			
+			calcularAnyosCoche(){
+				return Math.abs(this._anyoFab-fecha.getFullYear());
+			}
+			calcularGanancias(){
+				return this._precioVenta-this._precioCompra;
+			}
+		}
+		var coches = new Array();
+		coches[0] = new Coche("Bugatti", "Chiron", 2016, 90000, 95000);
+		coches[1] = new Coche("Ford", "Mustang", 2015, 30000, 35000);
+		coches[2] = new Coche("Seat", "Ibiza", 2005, 2000, 3000);
+	
+		function validarMarca(){
+			var marca = document.getElementById("marca").value.trim().toLowerCase();
+			var esValido  = true;
+
+			if (marca.length !=0 && marca.length <= 20) {
+				var caraceteresPermitidos = 'abcdefghijklmnopqrstuvwxyzñç-., ';
+				for (var index = 0; index <=marca.length; index++){
+					if(caraceteresPermitidos.indexOf(marca.charAt(index)) == -1){
+						esValido = false;
+						document.getElementById("errMarca").innerHTML="Se han introducido caracteres no válidos en la marca";
+					}
+				}
+			}
+			else {
+				esValido = false; 
+				document.getElementById("errMarca").innerHTML="La marca no puede quedar en blanco o ha introducido más de 20 caracteres";
+			}
+			return esValido;
+		}
+
+		function validarModelo(){
+			var modelo = document.getElementById("modelo").value.trim().toLowerCase();
+			var esValido  = true;
+
+			if (modelo.length !=0 && modelo.length <= 20) {
+				var caraceteresPermitidos = 'abcdefghijklmnopqrstuvwxyzñç-., 1234567890';
+				for (var index = 0; index <=modelo.length; index++){
+					if(caraceteresPermitidos.indexOf(modelo.charAt(index)) == -1){
+						esValido = false;
+						document.getElementById("errModelo").innerHTML="Se han introducido caracteres no válidos en el modelo";
+					}
+				}
+			}
+			else {
+				esValido = false; document.getElementById("errModelo").innerHTML="El modelo no puede quedar en blanco o ha introducido más de 20 caracteres";
+			}
+			return esValido;
+		}
+
+		function validarCompra() {
+			var precioCompra = document.getElementById("precioCompra").value.trim();
+			var esValido = true;
+			if (precioCompra.length !=0) {
+				var caraceteresPermitidos = '1234567890';
+				for (var index = 0; index <= precioCompra; index++) {
+					if (caraceteresPermitidos.indexOf(precioCompra.charAt(index)) == -1) {
+						esValido = false;
+						document.getElementById("errPrecioCompra").innerHTML="Se han introducido caracteres no numéricos en el precio de compra";
+					}
+				}
+			}
+			else {
+				esValido = false;
+				document.getElementById("errPrecioCompra").innerHTML="El precio de compra no puede quedar en blanco";
+			}
+			return esValido;
+		}
+
+		function validarVenta() {
+			var precioVenta = document.getElementById("precioVenta").value.trim();
+			var esValido = true;
+			if (precioVenta.length !=0) {
+				var caraceteresPermitidos = '1234567890';
+				for (var index = 0; index <= precioVenta; index++) {
+					if (caraceteresPermitidos.indexOf(precioVenta.charAt(index)) == -1) {
+						esValido = false;
+						document.getElementById("errPrecioVenta").innerHTML="Se han introducido caracteres no numéricos en el precio de venta";
+					}
+				}
+			}
+			else {
+				esValido = false;
+				document.getElementById("errPrecioVenta").innerHTML="El precio de venta no puede quedar en blanco";
+			}
+			return esValido;
+		}
+
+		function validarAnyo() {
+			var anyoFab = document.getElementById("anyoFab").value.trim();
+			var esValido = true;
+			if (anyoFab.length !=0 && anyoFab.length <=4) {
+				if ((anyoFab < 1900) || (anyoFab-fecha.getFullYear())>0) {
+					esValido = false;
+					document.getElementById("errAnyoFab").innerHTML="El año de fabricación no puede ser superior al año actual o ser menor de 1900";
+				}
+				else {
+					var caraceteresPermitidos = '1234674890';
+			
+					for (var index = 0; index <= anyoFab; index++) {
+						if (caraceteresPermitidos.indexOf(anyoFab.charAt(index)) == -1) {
+							esValido = false;
+							document.getElementById("errAnyoFab").innerHTML="Se han introducido caracteres no numéricos en el año de fabricación";
+						}
+					}
+				}
+			}	
+			else {
+				esValido = false;
+				document.getElementById("errAnyoFab").innerHTML="El precio de compra no puede quedar en blanco o ha introducido máas de 4 caracteres";
+			}
+			return esValido;
+		}
+
+		function limpiar () {
+			document.getElementById('marca').value = '';
+			document.getElementById('modelo').value = '';
+			document.getElementById('anyoFab').value = '';
+			document.getElementById('precioCompra').value = '';
+			document.getElementById('precioVenta').value = '';
+		}
+
+		function limpiarDivs () {
+			document.getElementById('errMarca').value = '';
+			document.getElementById('errModelo').value = '';
+			document.getElementById('errAnyoFab').value = '';
+			document.getElementById('errPrecioCompra').value = '';
+			document.getElementById('errPrecioVenta').value = '';
+		}
+
+		
+		function crearCoche(){
+			limpiarDivs();
+			if (validarMarca() && validarModelo() && validarAnyo() && validarCompra() && validarVenta()) {
+				var marca = document.getElementById("marca").value;
+				var modelo = document.getElementById("modelo").value;
+				var anyoFab = document.getElementById("anyoFab").value;
+				var precioCompra = document.getElementById("precioCompra").value;
+				var precioVenta = document.getElementById("precioVenta").value;
+				coches.push(new Coche (marca, modelo, parseInt(anyoFab), parseInt(precioCompra), parseInt(precioVenta)));
+				//console.log(coches);
+				limpiar();
+
+			}
+			else {
+				alert("No se ha añadido el array");
+			}
+		}
+		
+		var miVentana = "";
+		function listarCoches(){
+			miVentana = window.open('', 'Lista Coches', 'width=900, height=500');
+			miVentana.document.write("<table border=1>");
+			miVentana.document.write("<tr><td><b>Marca</b></td> <td><b>Modelo</b></td> <td><b>A&ntilde;o de Fabricaci&oacute;n</b></td> <td><b>A&ntilde;os Coche</b></td> <td><b>Precio Compra</b></td> <td><b>Precio Venta</b></td> <td><b>Ganancias/P&eacute;rdidas</b></td></tr>");
+			
+			for (var i=0; i<=coches.length-1; i++) {
+				miVentana.document.write("<tr>");
+				miVentana.document.write("<td>" + coches[i].marca + "</td><td align='center'>" + coches[i].modelo + "</td><td align='center'>" + coches[i].anyoFab + "</td><td align='center'>" + coches[i].calcularAnyosCoche() + "</td><td align='center'>" + coches[i].precioCompra + "</td><td align='center'>" + coches[i].precioVenta + "</td><td align='center'>" + coches[i].calcularGanancias() + "</td>");
+				miVentana.document.write("</tr>");
+			}
+			miVentana.document.write("</table>");
+			var verdad;
+			if (navigator.cookieEnabled) {
+				verdad = "SI";
+			}
+			else {
+				verdad = "NO";
+			}
+			miVentana.document.write("El navegador " + verdad + " tiene habilitadas las cookies<br/>");
+			if (navigator.javaEnabled()){
+				verdad = "SI";
+			}
+			else {
+				verdad = "NO";
+			}
+			miVentana.document.write("El navegador" + verdad + " est&aacute; preparado para soportar los Applets de Java<br/>");
+			miVentana.document.write("<input type='button' value='Cerrar' onclick='window.close();'/>");
+			
+		}
+		
+	</script>
+	</head>
+	<body>
+		<div>Marca<input type="text" id="marca"/></div><div id="errMarca"></div>
+		<div>Modelo<input type="text" id="modelo"/></div><div id="errModelo"></div>
+		<div>A&ntilde;o de Fabricaci&oacute;n<input type="text" id="anyoFab"/></div><div id="errAnyoFab"></div>
+		<div>Precio Compra<input type="text" id="precioCompra"/></div><div id="errPrecioCompra"></div>
+		<div>Precio Venta<input type="text" id="precioVenta"/></div><div id="errPrecioVenta"></div>
+		<div>
+			<button onclick="crearCoche()">Dar de alta</button>
+			<button onclick="listarCoches()">Listar Coches</button>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>IEEE754</title>
+</head>
+<body>
+    <script>
+        // Tienes que implementar una función llamada ieee754aBinario() que convierta un número float en su correspondiente valor en binario de 32-bits . Para ellos tienes que analizar cada parte del número y poner el bit en el lugar correspondiente. 
+        
+        var num = prompt("Introduzca número: ");
+        ieee754aBinario(num);
+        
+        function ieee754aBinario(num){
+            var binario =  num.toString(2);
+            
+            document.write(num + " en binario es: " + binario);
+        }
+        
+        
+    
+    
+    </script>
+</body>
+</html>

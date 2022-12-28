@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Funciones 18</title>
+</head>
+<body>
+    <script>
+        // Escribir la función secuencia que admita dos argumentos, 
+        // por ejemplo n y m y devuelva un array de n elementos 
+        // en el que cada elemento es m
+        
+        var n = prompt("Introduce longitud del array: ");
+        var m = prompt("Introduce valor del array: ");
+        
+        function secuencia(n, m){
+            var matriz = new Array();
+            
+            for(i=0; i<=n; i++){
+                matriz[i] = m;
+            }
+            var resultado = matriz.toString();
+            return resultado;
+        }
+        
+        var resu = secuencia(n,m);
+        
+        document.write( "Su array es : " + resu);
+    
+    </script>
+</body>
+</html>

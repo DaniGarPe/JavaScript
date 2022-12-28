@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Kaprekar</title>
+</head>
+<body>
+    <h1>Kaprekar</h1>
+    <script>
+        
+        /*
+        
+        Realizar un programa en JavaScript que compruebe la 
+        constante de Kaprekar.
+        Introduciendo un número de cuatro cifras se debe 
+        comprobar cuántas iteraciones son necesarias para llegar 
+        al número 6174
+
+        */
+        
+        var n1 = parseInt(prompt("Introduce primer numero: "));
+        var n2 = parseInt(prompt("Introduce segundo numero: "));
+        var n3 = parseInt(prompt("Introduce tercer numero: "));
+        var n4 = parseInt(prompt("Introduce cuarto numero: "));
+        
+        var contador = 0;
+
+        do{
+            var numeros = new Array(n1, n2, n3, n4);
+            // numeros = 5,2,9,1
+        
+            var menorAmayor = numeros.sort();
+        
+            var stringMenor = menorAmayor[0].toString() + menorAmayor[1].toString() + menorAmayor[2].toString() + menorAmayor[3].toString();
+        
+            var sustraendo = parseInt(stringMenor);
+        
+            var menor = menorAmayor;
+
+            var mayorAmenor = menor.reverse();
+        
+            var stringMayor = mayorAmenor[0].toString() + mayorAmenor[1].toString() + mayorAmenor[2].toString() + mayorAmenor[3].toString();
+        
+            var minuendo = parseInt(stringMayor);
+
+            var resultado = minuendo - sustraendo;
+
+            if(resultado != 6174){
+                contador++;
+            }
+            
+            var resuString = resultado.toString();
+
+            n1 = parseInt(resuString.charAt(0));
+            n2 = parseInt(resuString.charAt(1));
+            n3 = parseInt(resuString.charAt(2));
+            n4 = parseInt(resuString.charAt(3));
+
+            document.write("<br>");
+            document.write("Ordenado de menor a mayor: "+ stringMenor);
+            document.write("<br>");
+            document.write("Ordenado de mayor a menor: " + stringMayor);
+            document.write("<br><br>");
+            document.write("Resultado: " + minuendo + " - " + sustraendo + " = " + resultado);
+            document.write("<br><br>");
+            document.write("Total de iteraciones: " + contador);
+            document.write("<hr>");
+
+        }while(resultado != 6174 || contador == 7);
+        
+    </script>
+</body>
+</html>

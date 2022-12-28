@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3</title>
+</head>
+<body>
+    <h1>Escribe la solucion y comprueba la respuesta</h1>
+    
+    <button type="button" onclick="aleatorios()">Calcular</button>
+    
+    <div>
+        <p><p id="multiplicar1"></p> X <p id="multiplicar2"></p> =</p>
+    </div>
+    
+    <textarea id="resultado"></textarea><button type="button" onclick="comprobar()">Comprobar</button>
+    
+    <p id="solucion"></p>
+    
+    <script>
+        
+        function aleatorios(){
+            
+            function aleatorio1(){
+                var num1 = (Math.floor(Math.random() * 20) + 1)-10;
+                return num1;
+            }
+            
+            function aleatorio2(){
+                var num2 = (Math.floor(Math.random() * 20) + 1)-10;
+                return num2;
+            }
+            
+            var num1 = aleatorio1();
+            var num2 = aleatorio2();
+            
+            document.getElementById("multiplicar1").innerHTML = num1;
+            document.getElementById("multiplicar2").innerHTML = num2;
+            
+            var resu = new Array(num1,num2);
+            
+            return resu;
+        }
+        
+        var num1 = matriz[0];
+        var num2 = matriz[1];
+        var resultado = num1 * num2;
+        
+        function comprobar(resultado){
+            
+            var comprobacion = parseInt(document.getElementById("resultado").value);
+            
+            if(resultado != comprobacion){
+               document.getElementById("solucion").innerHTML = num1 + " x " + num2 + " = " + resu + " Revisa el calculo";
+            } else {
+                document.getElementById("solucion").innerHTML = num1 + " x " + num2 + " = " + resu + " Bien";
+            }
+        }
+        
+        
+    </script>
+</body>
+</html>

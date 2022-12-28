@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Evaluación - 1 </h2>
+<p>Objeto Viajes</p>
+<p id="demo"></p>
+<script>
+     
+    /*
+        Ejercicio-1 (4 puntos)
+    Crea un objeto Viajes con las siguientes propiedades:
+    Hora de salida (hh:mm)
+    Hora de llegada (hh:mm)
+    Kilómetros recorridos
+    Combustible utilizado en el recorrido
+    Crea los métodos:
+    Datos del viaje que devuelva el valor de todas las propiedades del objeto
+    Tiempo en horas (con dos decimales) invertido en el viaje (hora de llegada menos
+    la hora de salida)
+    Velocidad media en km/h del recorrido (número de kilómetros dividido por el tiempo
+    empleado)
+    Consumo del vehículo cada 100 km
+    Suponemos que salimos y llegamos en el mismo día.
+    Declaramos un nuevo objeto Viajes (miViaje) y controlamos que las entradas de la salida
+    y llegada tengan el formato correcto (hh:mm) y que la llegada sea posterior a la salida.
+    Las entradas de kilómetros y combustible deben ser numéricas mayores de 0. Además el
+    combustible como máximo 60 litros y los kilómetros menores a 700.
+    Llamamos a los métodos del objeto y visualizamos sus resultados (datos del viaje, tiempo
+    total, velocidad media y consumo)
+    Calculamos el tiempo de duración del viaje en horas y minutos.
+    Por ejemplo en un viaje de 300 km saliendo a las 09:00, llegando a las 12:00 y gastando
+    18 litros de combustible los resultados serían:
+    Salida: 09:00
+    Llegada: 12:00
+    Km: 300
+    Litros: 18
+    Tiempo = 3.00 horas
+    Velocidad media = 100 Km/h
+    Consumo (cada 100 km) = 6.00 litros
+    Tiempo = 3 horas 0 minutos
+    ¿Qué resultado se obtiene saliendo a las 08:15, llegando a las 12:30, recorriendo 450 Km
+    con 23 litros de combustible?
+    Tiempo en horas =
+    Velocidad media =
+    Consumo (cada 100 km) =
+    Tiempo (en horas y minutos) =     
+    
+    */
+    
+    function tiempoTotal(inicio,fin){
+        var iniMinutos = parseInt(inicio.substr(3,2));
+        var iniHoras = parseInt(inicio.substr(0,2));
+        var finMinutos = parseInt(fin.substr(3,2));
+        var finHoras = parseInt(fin.substr(0,2));
+        var tiempoHoras=((finHoras*60+finMinutos)-(iniHoras*60+iniMinutos))/60; // horas
+        return tiempoHoras.toFixed(2);
+    }
+
+    class Viaje {
+        constructor(km,inicio,fin,gasolina) {
+        this.km = km;
+        this.inicio = inicio;
+        this.fin = fin;
+        this.gasolina = gasolina;
+        }
+        
+        datos() {
+            return "salida: " + this.inicio + ", llegada: " + this.fin + ", Km= " +
+        this.km + ", litros de gasolina: " + this.gasolina;
+        //return `${this.marca} , ${this.modelo}`;
+        //return `Un bonito ${this.marca} ${this.modelo} ${this.color}`;
+        }
+        tiempo(){
+            var iniMinutos = parseInt(this.inicio.substr(3,2));
+            var iniHoras = parseInt(this.inicio.substr(0,2));
+            var finMinutos = parseInt(this.fin.substr(3,2));
+            var finHoras = parseInt(this.fin.substr(0,2));
+            var tiempoHoras=((finHoras*60+finMinutos)-(iniHoras*60+iniMinutos))/60; // horas
+            return tiempoHoras.toFixed(2);
+        }
+        velocidad(){ //velocidad media
+            return parseInt(this.km/this.tiempo());
+        }
+        consumo(){ //cada 100km
+            return (this.gasolina/(this.km/100)).toFixed(2);
+        }
+    }
+    do{
+        var entrada=false;
+        do{
+            var salida=prompt("Hora de salida (hh:mm)");
+        }while (/[0-9]{2}:[0-9]{2}/.test(salida)==false);
+        do{
+            var llegada=prompt("Hora de llegada (hh:mm)");
+        }while (/[0-9]{2}:[0-9]{2}/.test(llegada)==false);
+        if (tiempoTotal(salida,llegada)>0){
+            entrada=true;
+        }else{alert("La llegada tiene que ser posterior a la salida");}
+    }while (!entrada);
+    do{
+        var distancia=prompt("Km recorridos");
+    }while (isNaN(distancia)==true);
+    do{
+        var gasolina=prompt("gasolina consumida");
+    }while (isNaN(gasolina)==true);
+    alicante = new Viaje(distancia,salida,llegada,gasolina);
+    document.getElementById("demo").innerHTML = alicante.datos();
+    document.write(alicante.tiempo()," horas<br>");
+    document.write(alicante.velocidad()," km/h<br>");
+    document.write(alicante.consumo()," litros/100km<br>");
+</script>
+</body>
+</html>
+
+
+
+
+
+Ejercicio-2 (solución)
+<html>
+<body>
+<h2>Ex-1 evaluación</h2>
+<p>Pide un número del 0 al 999 (prompt).Controla la entrada.Visualiza
+resultado(id="entrada").
+ Ordena sus cifras de mayor a menor. Ordena sus cifras de menor a mayor. Suma
+ambos resultados.
+ Visualiza el resultado (id="resultado"). mayor + menor = suma. Calcula el número
+dividido entre 7 redondeado a 2 decimales </p>
+<p id="entrada"></p>
+<p id="resultado"></p>
+<script>
+    
+    
+    /*
+            Ejercicio-2 (3 puntos)
+    Escribe un programa que pida mediante un prompt un número entero positivo menor de
+    1000.
+    Comprobar que se introduce un número y que es correcto. Si no es válido aparecerá un
+    mensaje indicándoselo al usuario.
+    Si el número de entradas incorrectas supera a tres el programa emite una alerta al usuario
+    para que lo intente más tarde y finaliza.
+    Si el valor introducido es correcto se ordenan sus cifras de mayor a menor, de menor a
+    mayor y se suman ambos resultados.
+    Se visualiza por pantalla las operaciones realizadas.
+    Número introducido
+    Mayor + menor = suma
+    Calcula y visualiza el número pedido dividido entre 7 redondeado a 2 decimales.
+    4.721... -> 4.72 4.725... -> 4.73
+    */
+    var cont=0;
+    do{
+        num=prompt("dime un numero del 0 al 999");
+        control=(/^[\d]{1,3}$/.test(num));
+        cont++;
+    }while(!control && cont<4)
+    if(control) {
+        var numArr=num.split(""); // str -> array
+        var min=Number(numArr.sort().join(""));
+        var max=Number(numArr.reverse().join(""));
+        document.write(num ," = ",max, " + ",min, " = ",(max+min),"<br>");
+        document.write(num/7,"<br>");
+        document.write(Math.round(num/7*100)/100);
+    }else {
+    alert ("inténtalo de nuevo más tarde");
+    }
+</script>
+</body>
+</html>
+
+
+Ejercicio-3 (solución)
+<div>
+<h2>Escribe la solución y comprueba la respuesta</h2>
+<button type="button" class="boton" onclick=calcula()>Calcular</button>
+<p id="demo"></p>
+<input type="text" name="text1" id="solucion" onfocus=limpia()>
+<button type="button" class="boton" onclick=verifica()>Comprobar</button>
+<p id="bm"></p>
+</div>
+<script>
+    
+    
+    /*
+        Ejercicio-3 (3 puntos)
+    Crear un programa para ayudar a los alumnos que tienen que aprender a multiplicar
+    números enteros (positivos y negativos).
+    El botón calcular genera dos números enteros aleatorios del -10 al 10 ambos incluidos al
+    hacer clic sobre él.
+    Debajo del botón se muestra la expresión a calcular.
+    En la caja de texto el alumno escribe su respuesta.
+    El botón comprobar verifica la respuesta, si es correcta aparece el mensaje “bien”, si no lo
+    es aparece “revisa el cálculo”.
+    Cuando el foco se sitúa en la caja de texto desaparece el mensaje.
+    Ejercicio-1 (Objetos: solución)
+    */
+    
+    var resp=0;
+    var mensaje="";
+    function limpia(){
+        document.getElementById("bm").innerHTML = "";
+    }
+    function calcula(){
+        var x = parseInt(Math.random()*11);
+        var y = parseInt(Math.random()*11);
+        mensaje = x + " x " + y + " = "
+        document.getElementById("demo").innerHTML = mensaje;
+        document.getElementById("bm").innerHTML = "";
+        resp=x*y;
+
+    }
+    function verifica(){
+        var respuesta = document.getElementById("solucion").value;
+        if (respuesta == resp){
+            document.getElementById("bm").innerHTML = "bien";
+        }else{
+            document.getElementById("bm").innerHTML = " revisa el cálculo ";
+        }
+    }
+</script>
+</body>
+</html>

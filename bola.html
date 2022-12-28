@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+    <canvas id="myCanvas" width="200" height="100" style="border:1px solid #d3d3d3;">
+        Your browser does not support the canvas element.
+    </canvas>
+
+    <script>
+        var y = 10; 
+        var x = 10; 
+        var cont = 0;
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        
+        var z = setInterval(bola, 50);
+        var w = setInterval(contador, 500);
+        
+        function bola(){
+            ctx.clearRect(0,0,200,100);
+            ctx.beginPath();
+            ctx.arc(x,y,6,0,2*Math.PI);
+            ctx.stroke();
+            
+            y=y+1;
+            x++;
+
+            if(y > 100){
+                clearInterval(z);
+            }
+        }
+        
+        function contador(){
+            document.getElementById("con").innerHTML=cont++;
+            if(cont>10){
+                clearInterval(w);
+            }
+        }
+
+        
+    </script> 
+
+</body>
+</html>

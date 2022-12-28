@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Comprobar NIF</title>
+</head>
+<body>
+    <form>
+        <label>Introduce NIF</label>
+        <input type="text" name="nif" id="nif">
+        <input type="button" value="Validar" onclick="comprobar()">
+    </form>
+    
+    <br>
+    <div id="mydiv"></div>
+    <script>
+        /*
+            Realiza un formulario que te pida el NIF en una caja de texto. Comprueba con expresiones regulares que el NIF tiene 8 números y una letra mayúsculas al final.
+            Crea un botón de validar que compruebe si es correcto. Para ello separa el número de la letra y divide el numero entre 23 obteniendo el resto.
+            Comprueba la letra que correspondería al resto obtenido en esta cadena:
+            TRWAGMYFPDXBNJZSQVHLCKE
+            Si el resto es 0 la letra es T, si es 1 la letra es R...
+            Compara la letra obtenida con la escrita en la caja de texto.
+            Si hay coincidencia muestra un mensaje de NIF válido.
+            Si es diferente indica un mensaje de error, si además la letra escrita no está en la cadena (por ejemplo O, Ñ) muestra un mensaje al usuario.
+        */
+        
+        function comprobar(){
+            var nif = document.getElementById("nif").value;
+            
+            var expr = /^([0-9]{8})+([A-Z])/;
+            var comprobar = expr.test(nif);
+            
+            if ( comprobar === false ){
+                var minuscula = /^([0-9]{8})+([a-z])/;
+                var comprobarMinus = minuscula.test(nif);
+                
+                if ( comprobarMinus === true ){
+                    document.getElementById("mydiv").innerHTML = "Su NIF: " + nif + " no es valido, debe tener una letra mayuscula.";
+                } else {
+                    document.getElementById("mydiv").innerHTML = "Su NIF: " + nif + " no es valido.";
+                }
+                
+            } else {
+
+                var todasLetras = "TRWAGMYFPDXBNJZSQVHLCKE";
+                
+                var num = parseInt(nif.slice(0,8));
+                var letra = nif.slice(8);
+                
+                var comprobarNum = num % 23;
+                
+                var comprobarLetra = todasLetras.charAt(comprobarNum);
+                
+                if(letra == comprobarLetra){
+                    document.getElementById("mydiv").innerHTML = "Su NIF: " + nif + " es correcto, su numero es: " + num + " y su letra es: " + letra + ".";
+                } else {
+                    document.getElementById("mydiv").innerHTML = "Su NIF: " + nif + " es incorrecto, la letra " + letra + " no es correcta.";
+                }
+
+            }
+
+        }
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+

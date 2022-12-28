@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2</title>
+    <style>
+        #actual{
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calcular tiempo transcurrido</h1>
+    <form action="">
+        <label>Fecha inicial: </label>
+        <input type="date" name="inicial" id="inicial">
+        <br><br>
+        <label>Fecha actual: </label>
+        <input type="text" name="actual" id="actual" disabled>
+        <br><br>
+        <input type="button" id="boton" value="Calcular" onclick="calcular()">
+    </form>
+    <div id="alerta"></div>
+    <br>
+    <div id="dias"></div>
+    <br>
+    <div id="semanas"></div>
+    
+    <script>
+        
+        // falla los dias y las semanas y falta texto monoespace
+        
+        // recojo y muestro la fecha actual en el campo fecha actual
+        var fechaActual = new Date();
+
+        var diaHoy = fechaActual.getDate();
+        
+        if(diaHoy < 10){
+            diaHoy = "0" + diaHoy;
+        }
+        
+        var mesHoy = fechaActual.getMonth()+1;
+        
+        if(mesHoy < 10){
+            mesHoy = "0" + mesHoy;
+        }
+         
+        var anoHoy = fechaActual.getFullYear();
+        
+        var imprimirHoy = diaHoy + "/" + mesHoy + "/" + anoHoy;
+        
+        document.getElementById("actual").value = imprimirHoy;
+        
+        
+        // creo la funcion calcular que recoge la fecha de hoy y calcula la diferencia entre ambas
+        function calcular(){
+            
+            var fechaActual = new Date();
+            var fechaInicial = new Date(document.getElementById("inicial").value);
+            
+            //alert("fecha actual: " + fechaActual);
+            //alert("fecha inicial: " + fechaInicial);
+                                                           // esta evita poner la fecha vacia
+            if(fechaInicial == "" || fechaInicial == " " || fechaInicial == "Invalid Date" || fechaInicial == null){
+                
+                document.getElementById("alerta").innerHTML = "Debes seleccionar la fecha inicial";
+            } else {
+                var difMili = fechaActual - fechaInicial // diferencia en milisegundos
+                
+                alert("Diferencia en milisegundos: "+ difMili);
+                
+                var difDias = difMili / (1000 * 60 * 60 * 24); // diferencia en dias
+                var difSemanas = difDias / 7; // diferencia semanas
+                
+                var difSemanas = difSemanas.toFixed(1);
+        
+                var resuRedondeo = parseFloat(difSemanas);
+
+                document.getElementById("dias").innerHTML = "Dias = " + Math.round(difDias);
+
+                document.getElementById("semanas").innerHTML = "Semanas = " + difSemanas;
+            }
+            
+        }
+    
+    
+    </script>
+    
+</body>
+</html>

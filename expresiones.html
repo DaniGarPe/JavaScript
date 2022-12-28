@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2</title>
+</head>
+<body>
+    <script>
+        /*
+            Solicite una cadena de caracteres que contenga 
+            direcciones de correo electrónico y muestre la cadena 
+            con las direcciones modificadas en las que se
+            han sustituido tres caracteres del nombre del buzón 
+            por asteriscos y tres caracteres del proveedor por 
+            asteriscos
+            
+            ej: pepe123@hotmail.com
+                ***e123@***mail.com
+        */
+        
+        // Inicio la variable resultado
+        var resultado ="";
+        
+        // cojo el email
+        var email = prompt("Introduce correo electrónico: ");
+        
+        // compruebo si el email tiene un formato correcto
+        var expr = /^([a-zA-Z0-9_.-])+@(([a-zA-Z])+.)+([a-zA-Z])+$/;
+        var comprobar = expr.test(email);
+        if ( comprobar == false ){
+            document.write("Error: La dirección de correo " + email + " es incorrecta.");
+        } else {
+            
+            // cojo la parte del buzon, la ucal es desde el inicio al @
+            var finalBuzon = email.indexOf("@");
+            var buzon = email.slice(0, finalBuzon);
+            
+            //cojo la parte del proveedor la cual va desde el @ hasta el final
+            var inicioProveedor = email.indexOf("@");
+            var proveedor = email.slice(inicioProveedor+1);
+            
+            // sustituyo los 3 primeros caracteres de cada uno por 3 asteriscos
+            var resuBuzon = buzon.replace(/^([a-zA-Z0-9_.-]){1,3}/, "***");
+            var resuProveedor = proveedor.replace(/^([a-zA-Z]){1,3}/, "***");
+            
+            // los concateno para mostrarlo todo junto
+            resultado = resultado.concat(resuBuzon, "@", resuProveedor);
+            
+            document.write("El email es correcto. <br>" + resultado);
+        }
+        
+    </script>
+</body>
+</html>

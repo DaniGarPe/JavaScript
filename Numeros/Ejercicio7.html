@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 7</title>
+</head>
+<body>
+    <p><b>7 </b> - Solicite tres números y muestre el central, si no hay uno central, debe advertirlo</p>
+    <script>
+    
+        // Solicite un número y muestre una cuenta atrás
+        
+        var num1 = prompt("Introduce  primer número");
+        var num2 = prompt("Introduce segundo número");
+        var num3 = prompt("Introduce tercer número");
+        
+        if(num2 == "" || num2 == null ){
+            alert("No hay numero central");
+            document.write("No se ha introducido numero central");
+        } else {
+            document.write("El numero central es: " + num2);
+        }
+    
+    </script>
+</body>
+</html>
